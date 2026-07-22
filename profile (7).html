@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joy Dionora Norca | Executive VA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --desk: #d8d2c4;
+    --card: #F7F3EA;
+    --ink: #21201C;
+    --tab-red: #B5322A;
+    --stamp-teal: #1F6F78;
+    --mustard: #E8A93A;
+    --plum: #6B3F69;
+    --sky: #2E6FA3;
+    --moss: #3F7A4E;
+    --pink: #FF6FA0;
+    --line: rgba(33,32,28,0.14);
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(33,32,28,0.06) 1px, transparent 0) 0 0/22px 22px,
+      var(--desk);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 60px 20px 90px;
+    font-family:'Work Sans', sans-serif;
+    color: var(--ink);
+  }
+
+  :focus-visible{ outline: 3px solid var(--stamp-teal); outline-offset: 3px; }
+
+  .card{
+    position:relative;
+    width: 100%;
+    max-width: 520px;
+    background: var(--card);
+    border-radius: 4px 4px 14px 14px;
+    box-shadow: 0 30px 60px -20px rgba(33,32,28,0.4), 0 2px 0 rgba(33,32,28,0.06);
+    padding: 54px 44px 40px;
+    opacity: 0;
+    transform: translateY(14px) rotate(-1.2deg);
+    animation: settle .6s cubic-bezier(.2,.7,.3,1) forwards .1s;
+  }
+
+  @keyframes settle{
+    to{ opacity:1; transform: translateY(0) rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card{ animation: none; opacity:1; transform:none; }
+  }
+
+  /* punch holes */
+  .card::before{
+    content:"";
+    position:absolute;
+    top: 18px; left: 50%;
+    width: 14px; height:14px;
+    background: var(--desk);
+    border-radius:50%;
+    box-shadow: -90px 0 0 var(--desk), 90px 0 0 var(--desk);
+    transform: translateX(-50%);
+  }
+
+  /* rolodex tab */
+  .tab{
+    position:absolute;
+    top: -22px; left: 40px;
+    background: var(--tab-red);
+    color: #F7F3EA;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size: 13px;
+    padding: 7px 16px 6px;
+    border-radius: 6px 6px 0 0;
+    letter-spacing: 0.04em;
+  }
+
+  .field-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(33,32,28,0.5);
+  }
+
+  /* photo, taped on */
+  .intro-row{
+    display:flex;
+    align-items:flex-start;
+    gap: 18px;
+    margin-bottom: 6px;
+  }
+  .photo-wrap{
+    width: 108px;
+    flex-shrink: 0;
+    margin: 8px 0 0;
+    transform: rotate(-4deg);
+  }
+  .photo-frame{
+    width:108px; height:108px;
+    border-radius: 6px;
+    background: #fff;
+    padding: 6px 6px 14px;
+    box-shadow: 0 10px 20px rgba(33,32,28,0.22);
+    position:relative;
+  }
+  .photo-frame img, .photo-frame .placeholder{
+    width:100%; height:100%;
+    display:block;
+    border-radius: 2px;
+    object-fit: cover;
+  }
+  .placeholder{
+    background: #e4ded0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tape{
+    position:absolute;
+    top:-10px; left: 50%;
+    width: 54px; height: 20px;
+    background: rgba(232,169,58,0.55);
+    transform: translateX(-50%) rotate(-2deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+
+  .pink-note{
+    position: relative;
+    flex: 1;
+    background: linear-gradient(160deg, rgba(255,111,160,0.14) 0%, rgba(255,111,160,0.05) 100%);
+    border: 1.5px solid rgba(255,111,160,0.45);
+    border-radius: 16px;
+    padding: 16px 18px 16px 22px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    opacity: 0.92;
+    box-shadow: 0 14px 26px -10px rgba(255,111,160,0.4);
+    animation: pinkFloat 4.5s ease-in-out infinite;
+  }
+  .pink-quote-mark{
+    position:absolute;
+    top: -6px; left: 8px;
+    font-family:'Source Serif 4', serif;
+    font-size: 42px;
+    color: var(--pink);
+    opacity: 0.55;
+    line-height:1;
+  }
+  @keyframes pinkFloat{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pink-note{ animation: none; }
+  }
+
+  @media (max-width: 480px){
+    .intro-row{ flex-direction: column; align-items:center; text-align:center; }
+    .photo-wrap{ margin: 0 auto; }
+  }
+
+  h1.name{
+    font-family:'Source Serif 4', serif;
+    font-weight:700;
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    margin: 0;
+    line-height: 0.95;
+    color: var(--ink);
+    position: relative;
+  }
+  h1.name .script{
+    display:block;
+    font-family:'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--tab-red);
+    line-height: 1;
+    margin-top: 2px;
+    transform: rotate(-2deg);
+  }
+  h1.name .script::after{
+    content:"";
+    position:absolute;
+    left: 2px;
+    width: 92px;
+    height: 3px;
+    background: var(--mustard);
+    margin-top: 10px;
+    border-radius: 3px;
+    display:block;
+  }
+
+  .role-stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stamp-teal);
+    border: 2.5px solid var(--stamp-teal);
+    border-radius: 4px;
+    padding: 7px 14px;
+    margin: 16px 0 6px;
+    transform: rotate(-2.5deg);
+    position: relative;
+  }
+  .role-stamp::before{
+    content:"";
+    position:absolute;
+    inset: 3px;
+    border: 1px solid var(--stamp-teal);
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+
+  .title{
+    font-family:'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink);
+    opacity: 0.75;
+    line-height:1.6;
+    max-width: 430px;
+    margin: 0 0 20px;
+  }
+  .bio{
+    font-size: 14.5px;
+    line-height: 1.65;
+    opacity: 0.82;
+    max-width: 420px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed var(--line);
+    margin-bottom: 22px;
+  }
+
+  .fields{ display:flex; flex-direction:column; }
+  .field-row{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    padding: 12px 10px;
+    margin: 0 -10px;
+    border-radius: 8px;
+    text-decoration:none;
+    color: var(--ink);
+    transition: background .18s ease, padding-left .18s ease;
+  }
+  .field-row:hover, .field-row:focus-visible{
+    background: rgba(31,111,120,0.08);
+    padding-left: 16px;
+  }
+  .field-icon{
+    width: 30px; height:30px;
+    border-radius:50%;
+    background: var(--stamp-teal);
+    color:#F7F3EA;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    font-size: 14px;
+  }
+  .field-text{ display:flex; flex-direction:column; }
+  .field-text .field-label{ margin-bottom:1px; }
+  .field-text .field-value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+  }
+
+  .stamp{
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .stamp-mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--mustard);
+    border: 1.5px solid var(--mustard);
+    padding: 5px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transform: rotate(-3deg);
+  }
+  .view-all{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--tab-red);
+    text-decoration:none;
+    border-bottom: 1.5px solid var(--tab-red);
+    padding-bottom:2px;
+  }
+  .view-all:hover{ opacity:0.7; }
+
+  /* ---------- request a service ---------- */
+  .request-section{
+    margin-top: 30px;
+    padding-top: 26px;
+    border-top: 1px dashed var(--line);
+  }
+  .request-section h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(33,32,28,0.55);
+    margin: 0 0 4px;
+  }
+  .request-sub{
+    font-size: 13px;
+    opacity: 0.65;
+    margin: 0 0 16px;
+  }
+
+  .float-bar{
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 999;
+    background: var(--ink);
+    color: var(--card);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 14px 46px 14px 18px;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.25);
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.2,.8,.3,1), background .2s ease;
+  }
+  .float-bar.show{ transform: translateY(0); }
+  .float-bar.step-done{ background: var(--moss); }
+  .float-bar-close{
+    position: absolute;
+    top: 50%; right: 14px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--card);
+    opacity: 0.6;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .float-bar-close:hover{ opacity: 1; }
+
+  .ticket-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .ticket{
+    position:relative;
+    border:none;
+    border-radius: 8px;
+    padding: 14px 14px 14px 18px;
+    color: #F7F3EA;
+    font-family:'Work Sans', sans-serif;
+    font-weight:500;
+    font-size: 13px;
+    text-align:left;
+    line-height:1.35;
+    cursor:pointer;
+    box-shadow: 0 6px 14px rgba(33,32,28,0.18);
+    transition: transform .15s ease, box-shadow .15s ease, outline .15s ease;
+  }
+  .ticket::before{
+    content:"";
+    position:absolute;
+    left:-1px; top:50%;
+    width:10px; height:10px;
+    background: var(--card);
+    border-radius:50%;
+    transform: translateY(-50%);
+    box-shadow: 0 -22px 0 -3px var(--card), 0 22px 0 -3px var(--card);
+  }
+  .ticket:hover{ transform: translateY(-3px); box-shadow: 0 12px 20px rgba(33,32,28,0.28); }
+  .ticket.selected{ outline: 3px solid var(--ink); outline-offset: 2px; }
+  .ticket small{ display:block; font-family:'IBM Plex Mono', monospace; font-size:10.5px; opacity:0.85; margin-top:3px; letter-spacing:.03em; }
+
+  .t-doc{ background: var(--tab-red); }
+  .t-web{ background: var(--stamp-teal); }
+  .t-book{ background: var(--moss); }
+  .t-legal{ background: var(--plum); }
+  .t-video{ background: var(--sky); }
+  .t-sky{ background: #2E5C8A; }
+  .t-social{ background: #B5762E; }
+  .t-calendar{ background: #6E6E3F; }
+  .t-general{ background: #444038; }
+  .t-discreet{ background: #5C4B6E; }
+
+  .time-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom: 20px;
+  }
+  .time-chip{
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    padding: 8px 14px;
+    border-radius: 100px;
+    cursor:pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .time-chip:hover{ background: rgba(33,32,28,0.06); }
+  .time-chip.selected{ background: var(--ink); color: var(--card); }
+
+  .send-request-btn{
+    width:100%;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    box-sizing:border-box;
+    background: var(--mustard);
+    color: var(--ink);
+    border:none;
+    padding: 15px;
+    border-radius: 10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size: 14px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+    box-shadow: 0 8px 18px rgba(232,169,58,0.35);
+  }
+  .send-request-btn:hover:not(:disabled){ transform: translateY(-2px); }
+  .send-request-btn:disabled{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
+  .send-request-btn.is-disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+    box-shadow:none;
+    pointer-events:none;
+  }
+
+  .summary-box{
+    background: rgba(63,122,78,0.1);
+    border: 1.5px solid var(--moss);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .summary-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    margin: 0;
+    padding: 3px 0;
+  }
+  .summary-label{ font-weight:700; color: var(--moss); }
+
+  .sent-confirm{
+    background: rgba(63,122,78,0.12);
+    border: 1.5px solid var(--moss);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .request-hint{
+    text-align:center;
+    font-size: 11.5px;
+    opacity:0.55;
+    margin-top: 10px;
+  }
+
+  .fallback-box{
+    margin-top: 16px;
+    padding: 14px;
+    background: rgba(33,32,28,0.04);
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+  }
+  .fallback-note{
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 0 0 8px;
+    line-height: 1.5;
+  }
+  .fallback-text{
+    width: 100%;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+  .copy-btn{
+    width:100%;
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size: 12.5px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor:pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .copy-btn:hover{ background: var(--ink); color: var(--card); }
+  .copy-btn.copied{ background: var(--moss); color: var(--card); border-color: var(--moss); }
+
+  /* ---------- merged resume block ---------- */
+  .resume-block{
+    margin-top: 30px;
+    padding-top: 26px;
+    border-top: 1px dashed var(--line);
+  }
+  .resume-block > h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(33,32,28,0.55);
+    margin: 0 0 18px;
+  }
+  .resume-sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--stamp-teal);
+    margin: 26px 0 10px;
+  }
+  .resume-sub:first-of-type{ margin-top: 0; }
+  .resume-block p.summary{
+    font-size: 14px;
+    line-height: 1.65;
+    opacity: 0.82;
+    margin: 0;
+  }
+
+  .skill-pills{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .skill-pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    border: 1.3px solid var(--stamp-teal);
+    color: var(--stamp-teal);
+    padding: 5px 11px;
+    border-radius: 100px;
+  }
+
+  .job-entry{ margin-bottom: 20px; }
+  .job-entry:last-child{ margin-bottom:0; }
+  .job-title{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-size: 15.5px;
+    color: var(--ink);
+    margin: 0 0 2px;
+    line-height:1.3;
+  }
+  .job-meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(33,32,28,0.5);
+    margin: 0 0 8px;
+  }
+  .job-entry ul{
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    opacity: 0.8;
+  }
+  .job-entry li{ margin-bottom: 3px; }
+
+  .edu-block{ font-size: 14px; line-height:1.6; }
+  .edu-block strong{ font-family:'Source Serif 4', serif; font-weight:600; display:block; font-size:15.5px; margin-bottom:2px; }
+  .edu-block span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; opacity:0.6; }
+
+  .avail-stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tab-red);
+    border: 2px solid var(--tab-red);
+    border-radius: 4px;
+    padding: 6px 12px;
+    transform: rotate(-2deg);
+  }
+
+  .resume-toggle-btn{
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--stamp-teal);
+    color: var(--stamp-teal);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 13px;
+    border-radius: 10px;
+    cursor:pointer;
+    margin-top: 30px;
+    transition: background .15s ease, color .15s ease;
+  }
+  .resume-toggle-btn:hover{
+    background: var(--stamp-teal);
+    color: var(--card);
+  }
+
+  @media (max-width: 400px){
+    .ticket-grid{ grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px){
+    .card{ padding: 46px 26px 32px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="tab">N · NORCA</div>
+
+    <div class="intro-row">
+      <div class="photo-wrap">
+        <div class="photo-frame">
+          <div class="tape"></div>
+          <img src="photo.jpg" alt="Joy Dionora Norca">
+        </div>
+      </div>
+
+      <div class="pink-note">
+        <span class="pink-quote-mark">“</span>
+        Full-time mom turned fully equipped VA professional. Self-driven learner, armed with knowledge through dedicated daily study, research, and hands-on learning, and supported by a strong VA community. Ready to deliver results!
+      </div>
+    </div>
+
+    <h1 class="name">Joy<span class="script">at your service</span></h1>
+    <div class="role-stamp">Full-Stack Virtual Assistant</div>
+    <p class="title">I help business owners and individual workers streamline their day-to-day administration while building custom web solutions and automated workflows that save dozens of hours every week.</p>
+
+    <p class="bio">Hands-on experience across law offices, medical offices, real estate, and bookkeeping, plus a self-taught habit of building the tools I wish those offices had. I keep a documented, step-by-step coding portfolio so anyone can see exactly how each project works.</p>
+
+
+    <div class="request-section" id="request-services">
+      <h2>Request my services</h2>
+      <p class="request-sub">Tap ONE service and ONE time. I'll get a ready-made email from you.</p>
+
+
+      <div class="ticket-grid" id="serviceGrid">
+        <button class="ticket t-doc" data-service="Document Processing Assistance">Document Processing<small>Drafting, formatting, filing</small></button>
+        <button class="ticket t-web" data-service="Web Page Request">Web Page Request<small>New site or landing page</small></button>
+        <button class="ticket t-book" data-service="Bookkeeping Assistance">Bookkeeping Assistance<small>Records, reports, reconciling</small></button>
+        <button class="ticket t-legal" data-service="Legal Document Support">Legal Document Support<small>Law office admin tasks</small></button>
+        <button class="ticket t-video" data-service="CapCut Video Editing">CapCut Video Editing<small>Reels, promos, edits</small></button>
+        <button class="ticket t-social" data-service="Social Media Management">Social Media Mgmt.<small>Posting &amp; page updates</small></button>
+        <button class="ticket t-calendar" data-service="Calendar & Email Management">Calendar &amp; Inbox<small>Scheduling, email upkeep</small></button>
+        <button class="ticket t-general" data-service="General Inquiry">General Inquiry<small>Something else entirely</small></button>
+        <button class="ticket t-discreet" data-service="Discreet Editing">Discreet Editing<small>Private, confidential edits</small></button>
+      </div>
+
+      <p class="field-label" style="margin-bottom:8px;">Needed within / Engagement (choose ONE)</p>
+      <div class="time-row" id="timeRow">
+        <button class="time-chip" data-hours="2">2 hrs</button>
+        <button class="time-chip" data-hours="5">5 hrs</button>
+        <button class="time-chip" data-hours="8">8 hrs</button>
+        <button class="time-chip" data-hours="12">12 hrs</button>
+        <button class="time-chip" data-hours="Contractual">Contractual</button>
+        <button class="time-chip" data-hours="Full-time">Full-time</button>
+      </div>
+
+      <div class="summary-box" id="summaryBox" style="display:none;">
+        <p class="summary-line"><span class="summary-label">✅ Service:</span> <span id="summaryService">Not selected yet</span></p>
+        <p class="summary-line"><span class="summary-label">✅ Time:</span> <span id="summaryTime">Not selected yet</span></p>
+      </div>
+
+      <a class="send-request-btn is-disabled" id="sendRequestBtn" href="#" aria-disabled="true">Send Request</a>
+      <p class="request-hint">Opens your email app with the details filled in. Nothing sends automatically.</p>
+
+      <p class="sent-confirm" id="sentConfirm" style="display:none;">✅ Ready! Your email app should now be open with everything filled in. Just hit <strong>Send</strong> there to reach Joy.</p>
+
+      <div class="fallback-box" id="fallbackBox" style="display:none;">
+        <p class="fallback-note">Email app didn't open? Copy this and send it to <strong>meonly88888888@gmail.com</strong> manually:</p>
+        <textarea class="fallback-text" id="fallbackText" readonly rows="5"></textarea>
+        <button class="copy-btn" id="copyBtn">Copy Message</button>
+      </div>
+    </div>
+
+    <div class="request-section">
+      <h2>Websites for sale</h2>
+      <p class="request-sub">Ready-made builds. Happy to customize the design, colors, and content to your brand.</p>
+
+      <a class="ticket t-doc" style="display:block; margin-bottom:10px;" href="mailto:meonly88888888@gmail.com?subject=Inquiry%3A%20Webpage%20%26%20Website%20For%20Sale&body=Hi%20Joy%2C%0A%0AI'm%20interested%20in%20this%20site%3A%0Ahttps%3A%2F%2Funfacedinternational-dev.github.io%2FMy-petshoponline%2F%0A%0APlease%20tell%20me%20more%20about%20pricing%20and%20customizing%20it%20for%20my%20own%20brand.%0A%0AThanks!">
+        WEBPAGE &amp; WEBSITE FOR SALE
+        <small>Pet shop build, ready to be changed to your brand</small>
+      </a>
+
+      <a class="ticket t-web" style="display:block; margin-bottom:10px;" href="mailto:meonly88888888@gmail.com?subject=Inquiry%3A%20Webpage%20%26%20Website%20For%20Sale&body=Hi%20Joy%2C%0A%0AI'm%20interested%20in%20this%20site%3A%0Ahttps%3A%2F%2Fismexofficial.lovable.app%2F%0A%0APlease%20tell%20me%20more%20about%20pricing%20and%20customizing%20it%20for%20my%20own%20brand.%0A%0AThanks!">
+        WEBPAGE &amp; WEBSITE FOR SALE
+        <small>ISMEX Official build, ready to be changed to your brand</small>
+      </a>
+
+      <a class="ticket t-sky" style="display:block;" href="mailto:meonly88888888@gmail.com?subject=Inquiry%3A%20Webpage%20%26%20Website%20For%20Sale&body=Hi%20Joy%2C%0A%0AI'm%20interested%20in%20this%20site%3A%0Ahttps%3A%2F%2Fismex-philippines.streamlit.app%2F%0A%0APlease%20tell%20me%20more%20about%20pricing%20and%20customizing%20it%20for%20my%20own%20brand.%0A%0AThanks!">
+        WEBPAGE &amp; WEBSITE FOR SALE
+        <small>ISMEX Philippines build, ready to be changed to your brand</small>
+      </a>
+
+    </div>
+
+    <div class="stamp">
+      <span class="stamp-mark">Open to work</span>
+    </div>
+
+    <button class="resume-toggle-btn" id="resumeToggleBtn" onclick="
+      const el = document.getElementById('resumeBlock');
+      const open = el.style.display !== 'none';
+      el.style.display = open ? 'none' : 'block';
+      this.textContent = open ? 'View Full Resume ▾' : 'Hide Full Resume ▴';
+    ">View Full Resume ▾</button>
+
+    <div class="resume-block" id="resumeBlock" style="display:none;">
+      <h2>Full Resume</h2>
+
+      <p class="resume-sub">Professional Summary</p>
+      <p class="summary">Hardworking Executive Virtual Assistant with programming skills. Hands-on, on-site experience in law offices, medical offices, real estate, and bookkeeping. Skilled at managing calendars, emails, documents, and daily office tasks, and I build websites and functional web apps independently using tools like Lovable and Python/Streamlit. I work with care, honesty, and accuracy, and learn new tasks quickly. Reliable internet connection and home office setup for remote work.</p>
+
+      <p class="resume-sub">Core Skills</p>
+      <div class="skill-pills">
+        <span class="skill-pill">Law office admin</span>
+        <span class="skill-pill">Calendar &amp; inbox mgmt</span>
+        <span class="skill-pill">Document drafting &amp; filing</span>
+        <span class="skill-pill">Bookkeeping</span>
+        <span class="skill-pill">Video editing (CapCut, Canva)</span>
+        <span class="skill-pill">Client/patient comms</span>
+        <span class="skill-pill">Data entry &amp; records</span>
+        <span class="skill-pill">CRM &amp; scheduling</span>
+        <span class="skill-pill">Confidentiality &amp; compliance</span>
+        <span class="skill-pill">Billing &amp; invoicing</span>
+        <span class="skill-pill">Google Workspace / MS Office</span>
+        <span class="skill-pill">Python, Streamlit, Lovable</span>
+      </div>
+
+      <p class="resume-sub">Work Experience</p>
+
+      <div class="job-entry">
+        <p class="job-title">Freelance Document Processor (On-Call)</p>
+        <p class="job-meta">Independent Clients · 2021 – Present</p>
+        <ul>
+          <li>Process documents for different clients on an on-call, as-needed basis</li>
+          <li>Prepare, format, and organize files based on each client's needs</li>
+          <li>Handle documents with care and confidentiality</li>
+          <li>Deliver completed work on time, even with short notice</li>
+        </ul>
+      </div>
+
+      <div class="job-entry">
+        <p class="job-title">Law Office Administrator / Receptionist</p>
+        <p class="job-meta">Atty. Jan Nino G. Jugadora Law Office, Tagum City · Feb 2021 – Apr 2023</p>
+        <ul>
+          <li>Managed front-desk operations and a multi-line phone system</li>
+          <li>Scheduled attorney calendars, court dates, and client meetings</li>
+          <li>Prepared, formatted, and filed legal documents and letters</li>
+          <li>Organized and updated case files and records</li>
+        </ul>
+      </div>
+
+      <div class="job-entry">
+        <p class="job-title">Bookkeeper</p>
+        <p class="job-meta">Toyota Tagum, Tagum City · 2017 – 2020</p>
+        <ul>
+          <li>Recorded daily sales, expenses, and payments</li>
+          <li>Organized financial documents and receipts</li>
+          <li>Helped prepare simple financial reports</li>
+        </ul>
+      </div>
+
+      <div class="job-entry">
+        <p class="job-title">Social Media Page Administrator (Freelance)</p>
+        <p class="job-meta">Private Client · 2019</p>
+        <ul>
+          <li>Managed a client's social media page as page administrator</li>
+          <li>Edited photos and videos using CapCut and Canva</li>
+        </ul>
+      </div>
+
+      <div class="job-entry">
+        <p class="job-title">Real Estate Agent</p>
+        <p class="job-meta">Star9 Real Estate &amp; Brokerage, Tagum City · 2015 – 2017</p>
+        <ul>
+          <li>Managed property listings and updated MLS entries</li>
+          <li>Handled transaction paperwork and closing documents</li>
+          <li>Scheduled property showings and open houses</li>
+        </ul>
+      </div>
+
+      <div class="job-entry">
+        <p class="job-title">Medical Administrative Assistant</p>
+        <p class="job-meta">Tagum Doctors Hospital, Tagum City · 2019</p>
+        <ul>
+          <li>Scheduled patient appointments and managed provider calendars</li>
+          <li>Handled patient intake forms and insurance verification paperwork</li>
+          <li>Kept patient records accurate and private, following HIPAA rules</li>
+        </ul>
+      </div>
+
+      <p class="resume-sub">Education</p>
+      <div class="edu-block">
+        <strong>Bachelor of Science in Information Technology</strong>
+        <span>STI College of Davao, 2010 – 2012</span>
+      </div>
+
+      <p class="resume-sub">Availability</p>
+      <span class="avail-stamp">Ready to start anytime</span>
+    </div>
+
+    <div class="fields">
+      <a class="field-row" href="mailto:meonly88888888@gmail.com">
+        <span class="field-icon">✉</span>
+        <span class="field-text">
+          <span class="field-label">Email</span>
+          <span class="field-value">meonly88888888@gmail.com</span>
+        </span>
+      </a>
+
+      <a class="field-row" href="tel:+639975770172">
+        <span class="field-icon">☎</span>
+        <span class="field-text">
+          <span class="field-label">Phone</span>
+          <span class="field-value">+63 997 577 0172</span>
+        </span>
+      </a>
+
+      <div class="field-row" style="cursor:default;">
+        <span class="field-icon">⌖</span>
+        <span class="field-text">
+          <span class="field-label">Location</span>
+          <span class="field-value">Philippines</span>
+        </span>
+      </div>
+
+      <a class="field-row" href="https://linkedin.com/in/joynorca" target="_blank" rel="noopener">
+        <span class="field-icon">in</span>
+        <span class="field-text">
+          <span class="field-label">LinkedIn</span>
+          <span class="field-value">linkedin.com/in/joynorca</span>
+        </span>
+      </a>
+
+      <a class="field-row" href="https://linktr.ee/JoyD.N" target="_blank" rel="noopener">
+        <span class="field-icon">⁘</span>
+        <span class="field-text">
+          <span class="field-label">Linktree</span>
+          <span class="field-value">linktr.ee/JoyD.N</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="float-bar" id="floatBar">
+    <span id="floatBarText">👇 Tap ONE service to get started</span>
+    <button class="float-bar-close" id="floatBarClose" aria-label="Dismiss">✕</button>
+  </div>
+
+  <script>
+    let selectedService = null;
+    let selectedHours = null;
+
+    const serviceButtons = document.querySelectorAll('#serviceGrid .ticket');
+    const timeButtons = document.querySelectorAll('#timeRow .time-chip');
+    const sendBtn = document.getElementById('sendRequestBtn');
+    const summaryBox = document.getElementById('summaryBox');
+    const summaryService = document.getElementById('summaryService');
+    const summaryTime = document.getElementById('summaryTime');
+    const sentConfirm = document.getElementById('sentConfirm');
+    const fallbackBox = document.getElementById('fallbackBox');
+    const fallbackText = document.getElementById('fallbackText');
+    const copyBtn = document.getElementById('copyBtn');
+    const floatBar = document.getElementById('floatBar');
+    const floatBarText = document.getElementById('floatBarText');
+    const floatBarClose = document.getElementById('floatBarClose');
+
+    let barDismissed = false;
+
+    function updateFloatBar(){
+      if (barDismissed) return;
+
+      if (!selectedService && !selectedHours){
+        floatBarText.textContent = '👇 Tap ONE service to get started';
+        floatBar.classList.remove('step-done');
+      } else if (selectedService && !selectedHours){
+        floatBarText.textContent = `✅ "${selectedService}" selected. Now tap ONE hour or engagement time`;
+        floatBar.classList.remove('step-done');
+      } else if (!selectedService && selectedHours){
+        floatBarText.textContent = `✅ Time set. Now tap ONE service`;
+        floatBar.classList.remove('step-done');
+      } else {
+        floatBarText.textContent = '✅ All set. Now tap "Send Request"';
+        floatBar.classList.add('step-done');
+      }
+    }
+
+    // show the floating bar the moment the request section is anywhere on screen —
+    // no need to scroll all the way down to see it
+    const requestSection = document.getElementById('request-services');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !barDismissed){
+          floatBar.classList.add('show');
+        }
+      });
+    }, { threshold: 0.05 });
+    observer.observe(requestSection);
+
+    floatBarClose.addEventListener('click', () => {
+      barDismissed = true;
+      floatBar.classList.remove('show');
+    });
+
+    function buildMailtoHref(){
+      const isNumeric = !isNaN(selectedHours);
+      const timeLine = isNumeric ? `Needed within: ${selectedHours} hours` : `Engagement type: ${selectedHours}`;
+      const subject = encodeURIComponent(`Service Request: ${selectedService}`);
+      const body = encodeURIComponent(
+        `Hi Joy,\n\nI'd like to request: ${selectedService}\n${timeLine}\n\nDetails:\n[Describe what you need here]\n\nThanks!`
+      );
+      return `mailto:meonly88888888@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    function refreshSendState(){
+      const ready = selectedService && selectedHours;
+
+      // update the checklist summary
+      if (selectedService || selectedHours){
+        summaryBox.style.display = 'block';
+        summaryService.textContent = selectedService || 'Not selected yet';
+        summaryTime.textContent = selectedHours || 'Not selected yet';
+      } else {
+        summaryBox.style.display = 'none';
+      }
+
+      if (ready){
+        sendBtn.classList.remove('is-disabled');
+        sendBtn.removeAttribute('aria-disabled');
+        sendBtn.href = buildMailtoHref(); // real href, set BEFORE click — avoids Chrome's script-navigation block
+      } else {
+        sendBtn.classList.add('is-disabled');
+        sendBtn.setAttribute('aria-disabled', 'true');
+        sendBtn.href = '#';
+      }
+
+      sentConfirm.style.display = 'none';
+      fallbackBox.style.display = 'none';
+      updateFloatBar();
+    }
+
+    serviceButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // only ONE service can ever be selected — clicking another swaps the choice
+        serviceButtons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedService = btn.dataset.service;
+        refreshSendState();
+      });
+    });
+
+    timeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // only ONE time option can ever be selected — clicking another swaps the choice
+        timeButtons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedHours = btn.dataset.hours;
+        refreshSendState();
+      });
+    });
+
+    sendBtn.addEventListener('click', (e) => {
+      if (!selectedService || !selectedHours){
+        e.preventDefault();
+        return;
+      }
+      // href is already a real mailto: link at this point, so the browser
+      // follows it natively — this click is NOT blocked, unlike a JS redirect.
+
+      const isNumeric = !isNaN(selectedHours);
+      const timeLine = isNumeric ? `Needed within: ${selectedHours} hours` : `Engagement type: ${selectedHours}`;
+      fallbackText.value = `To: meonly88888888@gmail.com\nSubject: Service Request: ${selectedService}\n\nHi Joy,\n\nI'd like to request: ${selectedService}\n${timeLine}\n\nDetails:\n[Describe what you need here]\n\nThanks!`;
+
+      sentConfirm.style.display = 'block';
+      fallbackBox.style.display = 'block';
+
+      floatBarText.textContent = '✅ Sent! Check your email app and hit Send there to reach Joy';
+      floatBar.classList.add('step-done');
+    });
+
+    copyBtn.addEventListener('click', () => {
+      fallbackText.select();
+      fallbackText.setSelectionRange(0, 99999);
+      navigator.clipboard?.writeText(fallbackText.value).then(() => {
+        copyBtn.textContent = 'Copied ✓';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy Message';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>
