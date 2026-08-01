@@ -22,7 +22,28 @@
   }
 
   *{ box-sizing:border-box; }
+<div class="social-float" id="socialFloat">
+    <button class="social-main-btn" id="socialMainBtn" aria-label="For social media reference, tap to see my accounts">+</button>
 
+    <a class="social-bubble" href="https://www.facebook.com/share/1Ba5Yfcxba/" target="_blank" rel="noopener" aria-label="Facebook">
+      <span class="social-label">Facebook</span>
+      📘
+    </a>
+    <a class="social-bubble" href="https://www.tiktok.com/@va.codes" target="_blank" rel="noopener" aria-label="TikTok">
+      <span class="social-label">TikTok</span>
+      🎵
+    </a>
+    <a class="social-bubble" href="https://linkedin.com/in/joynorca" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <span class="social-label">LinkedIn</span>
+      💼
+    </a>
+  </div>
+
+  <script>
+    document.getElementById('socialMainBtn').addEventListener('click', function(){
+      document.getElementById('socialFloat').classList.toggle('open');
+    });
+  </script>
   body{
     margin:0;
     min-height:100vh;
@@ -626,7 +647,85 @@
     padding: 6px 12px;
     transform: rotate(-2deg);
   }
+/* ---------- floating social bubbles ---------- */
+  .social-float{
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    z-index: 998;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+  }
+  .social-label{
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 10px;
+    background: var(--ink);
+    color: var(--card);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 100px;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .social-float.open .social-label{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .social-bubble{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #F5B896;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 8px 18px rgba(33,32,28,0.25);
+    opacity: 0;
+    transform: scale(0.4) translateY(10px);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .social-float.open .social-bubble{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+  .social-bubble:hover{
+    background: #F0A578;
+    transform: scale(1.08);
+  }
+  .social-float.open .social-bubble:nth-child(2){ transition-delay: .03s; }
+  .social-float.open .social-bubble:nth-child(3){ transition-delay: .06s; }
+  .social-float.open .social-bubble:nth-child(4){ transition-delay: .09s; }
 
+  .social-main-btn{
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #F5B896;
+    border: none;
+    color: var(--ink);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(33,32,28,0.3);
+    transition: transform .25s ease, background .2s ease;
+  }
+  .social-main-btn:hover{ background: #F0A578; }
+  .social-float.open .social-main-btn{ transform: rotate(45deg); }
   .resume-toggle-btn{
     width: 100%;
     background: transparent;
