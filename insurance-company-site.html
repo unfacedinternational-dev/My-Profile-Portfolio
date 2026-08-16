@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalasag Insurance | Coverage Made Simple</title>
+<meta name="description" content="Sample insurance company web app: browse plans, view coverage, and get an instant quote. Demo project by Joy D. Norca.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#3B3F9E;
+    --indigo-deep:#262970;
+    --violet:#7C5CFC;
+    --violet-soft:#EDE8FF;
+    --coral:#FF6B6B;
+    --coral-soft:#FFE3E3;
+    --mint:#2EC4B6;
+    --mint-soft:#DBF6F3;
+    --sun:#FFC145;
+    --sun-soft:#FFF3D9;
+    --cloud:#F5F6FC;
+    --line:#E3E5F5;
+    --ink:#1B1D3A;
+    --slate:#63668A;
+    --shadow:0 10px 26px rgba(59,63,158,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--cloud); color:var(--ink);
+    font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  button{ font-family:inherit; cursor:pointer; border:none; }
+  :focus-visible{ outline:3px solid var(--violet); outline-offset:2px; }
+
+  /* ===== Nav ===== */
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; background:#fff; border-bottom:1px solid var(--line); flex-wrap:wrap; gap:10px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px; color:var(--indigo-deep); }
+  .logo-mark{ width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--violet),var(--indigo)); display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .nav-links{ display:flex; gap:22px; font-size:13.5px; font-weight:600; color:var(--slate); }
+  .nav-cta{ background:var(--coral); color:#fff; padding:9px 18px; border-radius:999px; font-size:13px; font-weight:700; }
+
+  /* ===== Hero ===== */
+  .hero{
+    background: radial-gradient(circle at 15% 20%, rgba(255,107,107,0.14), transparent 45%), radial-gradient(circle at 85% 10%, rgba(46,196,182,0.16), transparent 45%), linear-gradient(160deg, var(--indigo-deep), var(--indigo));
+    color:#fff; padding:56px 32px 40px; text-align:center;
+  }
+  .hero .eyebrow{ font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--sun); font-weight:700; margin-bottom:12px; }
+  .hero h1{ font-size:clamp(28px,4.4vw,44px); font-weight:800; line-height:1.15; margin-bottom:14px; }
+  .hero p{ font-size:14.5px; color:#D8DAF5; max-width:520px; margin:0 auto; }
+
+  .trust-row{ display:flex; justify-content:center; gap:34px; margin-top:30px; flex-wrap:wrap; padding-bottom:8px; }
+  .trust-item{ text-align:center; }
+  .trust-item .v{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:21px; color:var(--sun); }
+  .trust-item .l{ font-size:11px; color:#C6C9EE; text-transform:uppercase; letter-spacing:.5px; }
+
+  /* ===== Layout ===== */
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px 80px; }
+  .section-head{ text-align:center; margin:48px 0 26px; }
+  .section-head h2{ font-size:25px; font-weight:800; color:var(--indigo-deep); }
+  .section-head p{ font-size:13.5px; color:var(--slate); margin:6px 0 0; }
+
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  /* ===== Plan grid ===== */
+  .plan-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:900px){ .plan-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:620px){ .plan-grid{ grid-template-columns:1fr; } }
+
+  .plan-card{ background:#fff; border-radius:16px; box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; transition:transform .18s ease; border-top:5px solid var(--indigo); }
+  .plan-card:hover{ transform:translateY(-4px); }
+  .plan-head{ padding:20px 20px 12px; display:flex; align-items:center; gap:12px; }
+  .plan-icon{ width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; color:#fff; flex-shrink:0; }
+  .plan-name{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; }
+  .plan-tag{ font-size:11.5px; color:var(--slate); }
+  .plan-body{ padding:0 20px 20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .plan-desc{ font-size:13px; color:var(--slate); line-height:1.55; }
+  .plan-feats{ display:flex; flex-direction:column; gap:6px; margin:4px 0; }
+  .plan-feats span{ font-size:12.5px; display:flex; gap:7px; align-items:flex-start; }
+  .plan-foot{ margin-top:auto; padding-top:10px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line); }
+  .plan-price{ font-family:'Baloo 2',serif; font-weight:800; font-size:18px; color:var(--indigo-deep); }
+  .plan-price small{ font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:var(--slate); }
+  .btn{ background:var(--indigo); color:#fff; padding:9px 16px; border-radius:8px; font-size:12.5px; font-weight:700; transition:opacity .15s ease; }
+  .btn:hover{ opacity:.88; }
+  .btn.outline{ background:transparent; border:1.5px solid var(--indigo); color:var(--indigo); }
+  .btn.coral{ background:var(--coral); }
+  .btn.full{ width:100%; text-align:center; padding:13px; font-size:14px; }
+
+  /* ===== Detail view ===== */
+  .back-link{ display:inline-flex; align-items:center; gap:6px; color:var(--indigo); font-weight:700; font-size:13px; margin-top:24px; cursor:pointer; }
+  .detail-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:28px; margin-top:20px; align-items:start; }
+  @media (max-width:840px){ .detail-grid{ grid-template-columns:1fr; } }
+
+  .detail-hero{ border-radius:18px; padding:30px; color:#fff; display:flex; align-items:center; gap:18px; margin-bottom:22px; }
+  .detail-hero .plan-icon{ width:60px; height:60px; font-size:28px; background:rgba(255,255,255,0.22); }
+  .detail-hero h2{ font-size:24px; margin-bottom:4px; }
+  .detail-hero p{ font-size:13px; opacity:.9; margin:0; }
+
+  .info-card{ background:#fff; border-radius:14px; padding:20px 22px; box-shadow:var(--shadow); margin-bottom:18px; }
+  .info-card h3{ font-size:15px; font-weight:700; margin-bottom:12px; color:var(--indigo-deep); }
+  .cov-row{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px dashed var(--line); font-size:13.5px; }
+  .cov-row:last-child{ border-bottom:none; }
+  .cov-row .amt{ font-weight:700; color:var(--ink); }
+  .addon-list{ display:flex; flex-direction:column; gap:8px; }
+  .addon-item{ display:flex; align-items:center; gap:9px; font-size:13px; padding:6px 0; }
+
+  /* Quote panel */
+  .quote-panel{ background:#fff; border-radius:16px; box-shadow:var(--shadow); padding:22px; position:sticky; top:20px; }
+  .quote-panel h3{ font-size:16px; font-weight:700; margin-bottom:16px; color:var(--indigo-deep); }
+  .qp-row{ margin-bottom:14px; }
+  .qp-row label{ display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--slate); font-weight:700; margin-bottom:6px; }
+  .qp-row input, .qp-row select{ width:100%; border:1.5px solid var(--line); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; background:var(--cloud); }
+  .addon-row{ display:flex; align-items:center; gap:9px; font-size:13px; padding:5px 0; }
+  .price-line{ display:flex; justify-content:space-between; font-size:13px; padding:6px 0; color:var(--slate); }
+  .price-total{ display:flex; justify-content:space-between; font-size:18px; font-weight:800; padding-top:12px; margin-top:8px; border-top:1.5px solid var(--line); color:var(--indigo-deep); }
+
+  /* ===== Coverage card (result) ===== */
+  .card-wrap{ max-width:480px; margin:50px auto; }
+  .cover-card{ border-radius:20px; box-shadow:var(--shadow); overflow:hidden; color:#fff; }
+  .cc-top{ padding:26px; position:relative; }
+  .cc-top .shield{ position:absolute; right:22px; top:22px; font-size:34px; opacity:.35; }
+  .cc-top .eyebrow{ font-size:11px; letter-spacing:2px; text-transform:uppercase; opacity:.85; font-weight:700; margin-bottom:8px; }
+  .cc-top h2{ font-size:21px; font-weight:800; }
+  .cc-holder{ margin-top:18px; font-size:12px; opacity:.85; }
+  .cc-holder .name{ font-size:16px; font-weight:700; margin-top:2px; }
+  .cc-bottom{ background:#fff; color:var(--ink); padding:22px 26px 26px; }
+  .cc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px 10px; margin-bottom:18px; }
+  .cc-item .l{ font-size:10.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--slate); font-weight:700; margin-bottom:3px; }
+  .cc-item .v{ font-size:14.5px; font-weight:700; }
+  .cc-policy{ background:var(--cloud); border-radius:12px; padding:14px 16px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--slate); margin-bottom:18px; text-align:center; letter-spacing:1px; }
+
+  .below-fold{ text-align:center; margin:40px 0 20px; }
+  .below-fold h2{ font-size:23px; font-weight:800; color:var(--indigo-deep); margin-bottom:8px; }
+  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px; }
+  @media (max-width:700px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-card{ background:#fff; border-radius:14px; padding:22px; box-shadow:var(--shadow); text-align:left; }
+  .why-icon{ width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; color:#fff; margin-bottom:12px; }
+  .why-card h3{ font-size:15px; margin-bottom:6px; }
+  .why-card p{ font-size:13px; color:var(--slate); line-height:1.5; margin:0; }
+
+  .demo-note{ margin-top:36px; padding:14px 18px; background:var(--violet-soft); border-radius:10px; font-size:12px; color:var(--indigo-deep); line-height:1.6; }
+  .demo-note strong{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="logo"><div class="logo-mark">🛡️</div> Kalasag Insurance</div>
+  <div class="nav-links"><span>Plans</span><span>Claims</span><span>About</span></div>
+  <div class="nav-cta">Talk to an Agent</div>
+</div>
+
+<!-- BROWSE VIEW -->
+<div class="view active" id="view-browse">
+  <div class="hero">
+    <div class="eyebrow">Trusted by families across Mindanao</div>
+    <h1>Protection that fits your life, not the other way around</h1>
+    <p>Compare plans, see exactly what's covered, and get a real quote in under a minute, no hidden fine print.</p>
+    <div class="trust-row">
+      <div class="trust-item"><div class="v">18,400+</div><div class="l">Policies Active</div></div>
+      <div class="trust-item"><div class="v">4.8 ★</div><div class="l">Customer Rating</div></div>
+      <div class="trust-item"><div class="v">24/7</div><div class="l">Claims Support</div></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="section-head"><h2>Choose Your Coverage</h2><p>Six plan types, all with clear, upfront pricing</p></div>
+
+    <div class="plan-grid" id="planGrid"></div>
+
+    <div class="below-fold">
+      <h2>Why people choose Kalasag</h2>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-icon" style="background:var(--mint)">⚡</div><h3>Fast claims</h3><p>Most straightforward claims are processed within 3 to 5 business days.</p></div>
+        <div class="why-card"><div class="why-icon" style="background:var(--coral)">💬</div><h3>Real people, real help</h3><p>Talk to an actual agent by phone or chat, no long automated menus.</p></div>
+        <div class="why-card"><div class="why-icon" style="background:var(--sun)">📄</div><h3>Clear policies</h3><p>Coverage terms written in plain language, no confusing fine print.</p></div>
+      </div>
+    </div>
+
+    <div class="demo-note">
+      <strong>About this project:</strong> This is a sample insurance company web app, browse coverage plans, view what each one includes, and get an instant quote that ends in an actual coverage card, all working end to end. Built as a front end demo; a live version would connect to real underwriting and payment systems. Designed and developed by Joy D. Norca.
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div class="view" id="view-detail">
+  <div class="wrap">
+    <div class="back-link" onclick="showView('browse')">← Back to all plans</div>
+    <div class="detail-grid">
+      <div>
+        <div class="detail-hero" id="detailHero">
+          <div class="plan-icon" id="detailIcon"></div>
+          <div><h2 id="detailName"></h2><p id="detailTag"></p></div>
+        </div>
+
+        <div class="info-card">
+          <h3>What's Covered</h3>
+          <div id="coverageList"></div>
+        </div>
+
+        <div class="info-card">
+          <h3>Optional Add-ons</h3>
+          <div class="addon-list" id="detailAddons"></div>
+        </div>
+      </div>
+
+      <div class="quote-panel">
+        <h3 id="quoteHeading">Get Your Quote</h3>
+        <div class="qp-row"><label>Full Name</label><input type="text" id="qName" placeholder="Juan Dela Cruz"></div>
+        <div class="qp-row"><label>Age</label><input type="number" id="qAge" placeholder="30" min="18" max="80"></div>
+        <div class="qp-row"><label>Coverage Level</label>
+          <select id="qCoverage">
+            <option value="1">Basic</option>
+            <option value="1.5" selected>Standard</option>
+            <option value="2.2">Premium</option>
+          </select>
+        </div>
+        <div class="qp-row">
+          <label>Add-ons</label>
+          <div id="quoteAddonChecks"></div>
+        </div>
+        <div class="price-line"><span>Base premium</span><span id="priceBase" class="mono">₱0</span></div>
+        <div class="price-line"><span>Add-ons</span><span id="priceAddons" class="mono">₱0</span></div>
+        <div class="price-total"><span>Monthly total</span><span id="priceTotal" class="mono">₱0</span></div>
+        <button class="btn coral full" style="margin-top:16px;" onclick="getQuote()">Get My Coverage Card</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT VIEW -->
+<div class="view" id="view-result">
+  <div class="wrap">
+    <div class="card-wrap">
+      <div class="cover-card">
+        <div class="cc-top" id="ccTop">
+          <div class="shield">🛡️</div>
+          <div class="eyebrow">Kalasag Insurance</div>
+          <h2 id="ccPlanName">Plan Name</h2>
+          <div class="cc-holder">Policy Holder<div class="name" id="ccHolder">-</div></div>
+        </div>
+        <div class="cc-bottom">
+          <div class="cc-grid">
+            <div class="cc-item"><div class="l">Coverage Level</div><div class="v" id="ccLevel">-</div></div>
+            <div class="cc-item"><div class="l">Monthly Premium</div><div class="v" id="ccPremium">-</div></div>
+            <div class="cc-item"><div class="l">Effective Date</div><div class="v" id="ccDate">-</div></div>
+            <div class="cc-item"><div class="l">Status</div><div class="v" style="color:var(--mint)">Active</div></div>
+          </div>
+          <div class="cc-policy" id="ccPolicy">POLICY NO. -</div>
+          <button class="btn full" onclick="showView('browse')">Browse More Plans</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const plans = [
+    { id:1, name:"Auto Insurance", tag:"Comprehensive vehicle coverage", icon:"🚗", color:"var(--indigo)", grad:"linear-gradient(135deg,#3B3F9E,#7C5CFC)", base:1450,
+      desc:"Covers accidental damage, theft, and third party liability for your car or truck.",
+      coverage:[["Accidental Damage","Up to ₱1.5M"],["Theft Protection","Up to ₱800K"],["Third Party Liability","Up to ₱500K"],["Windshield and Glass","Included"]],
+      addons:[["Roadside Assistance",150],["Rental Car Coverage",220],["Personal Accident Cover",180]] },
+    { id:2, name:"Health Insurance", tag:"Hospital and medical coverage", icon:"🩺", color:"var(--coral)", grad:"linear-gradient(135deg,#FF6B6B,#FFC145)", base:2100,
+      desc:"Covers hospitalization, doctor consultations, and prescribed medication for you and your family.",
+      coverage:[["Hospitalization","Up to ₱2M / year"],["Doctor Consultations","Unlimited"],["Prescription Medicine","80 percent covered"],["Emergency Room Visits","Included"]],
+      addons:[["Dental Coverage",200],["Maternity Coverage",350],["Annual Check-up Package",180]] },
+    { id:3, name:"Life Insurance", tag:"Family financial protection", icon:"❤️", color:"var(--violet)", grad:"linear-gradient(135deg,#7C5CFC,#3B3F9E)", base:980,
+      desc:"Provides a lump sum benefit to your beneficiaries in the event of death, helping your family stay financially secure.",
+      coverage:[["Death Benefit","Up to ₱3M"],["Accidental Death Bonus","2x benefit"],["Terminal Illness Benefit","Included"],["Premium Waiver","On disability"]],
+      addons:[["Critical Illness Rider",280],["Income Protection Rider",320],["Child Education Fund",250]] },
+    { id:4, name:"Home Insurance", tag:"Protect your house and belongings", icon:"🏠", color:"var(--mint)", grad:"linear-gradient(135deg,#2EC4B6,#3B3F9E)", base:850,
+      desc:"Covers fire, typhoon, and flood damage to your home, plus theft of personal belongings inside.",
+      coverage:[["Fire Damage","Up to ₱2.5M"],["Typhoon and Flood","Up to ₱1.5M"],["Theft of Belongings","Up to ₱300K"],["Temporary Housing","Included"]],
+      addons:[["Earthquake Coverage",240],["Home Appliance Protection",160],["Valuables Coverage",190]] },
+    { id:5, name:"Travel Insurance", tag:"Coverage for trips abroad", icon:"✈️", color:"var(--sun)", grad:"linear-gradient(135deg,#FFC145,#FF6B6B)", base:420,
+      desc:"Covers trip cancellations, lost luggage, and emergency medical costs while traveling outside the Philippines.",
+      coverage:[["Trip Cancellation","Up to ₱80K"],["Lost Luggage","Up to ₱40K"],["Emergency Medical Abroad","Up to ₱1M"],["Flight Delay Compensation","Included"]],
+      addons:[["Adventure Sports Cover",150],["Extended Trip Duration",100],["Rental Car Excess Cover",130]] },
+    { id:6, name:"Motorcycle Insurance", tag:"Coverage for your ride", icon:"🏍️", color:"var(--indigo-deep)", grad:"linear-gradient(135deg,#262970,#7C5CFC)", base:680,
+      desc:"Covers accidental damage, theft, and third party liability for motorcycles and scooters.",
+      coverage:[["Accidental Damage","Up to ₱250K"],["Theft Protection","Up to ₱180K"],["Third Party Liability","Up to ₱200K"],["Helmet and Gear","Up to ₱10K"]],
+      addons:[["Roadside Assistance",90],["Personal Accident Cover",110],["Passenger Cover",70]] }
+  ];
+
+  let currentPlan = null;
+
+  function renderGrid(){
+    document.getElementById('planGrid').innerHTML = plans.map(p => `
+      <div class="plan-card" style="border-top-color:${p.color}">
+        <div class="plan-head">
+          <div class="plan-icon" style="background:${p.grad}">${p.icon}</div>
+          <div><div class="plan-name">${p.name}</div><div class="plan-tag">${p.tag}</div></div>
+        </div>
+        <div class="plan-body">
+          <div class="plan-desc">${p.desc}</div>
+          <div class="plan-feats">
+            ${p.coverage.slice(0,3).map(([l]) => `<span>✓ ${l}</span>`).join('')}
+          </div>
+          <div class="plan-foot">
+            <div class="plan-price mono">₱${p.base.toLocaleString()}<small> / month</small></div>
+            <button class="btn" style="background:${p.color}" onclick="openPlan(${p.id})">View Plan</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function openPlan(id){
+    currentPlan = plans.find(p => p.id === id);
+    document.getElementById('detailHero').style.background = currentPlan.grad;
+    document.getElementById('detailIcon').textContent = currentPlan.icon;
+    document.getElementById('detailIcon').style.background = 'rgba(255,255,255,0.22)';
+    document.getElementById('detailName').textContent = currentPlan.name;
+    document.getElementById('detailTag').textContent = currentPlan.tag;
+    document.getElementById('coverageList').innerHTML = currentPlan.coverage.map(([l,v]) => `<div class="cov-row"><span>${l}</span><span class="amt">${v}</span></div>`).join('');
+    document.getElementById('detailAddons').innerHTML = currentPlan.addons.map(([l,p],i) => `<div class="addon-item"><input type="checkbox" data-idx="${i}" class="addonCheck" onchange="updateTotal()"> <span>${l}, +₱${p} / month</span></div>`).join('');
+    document.getElementById('quoteAddonChecks').innerHTML = '';
+    document.getElementById('quoteHeading').textContent = `Get Your ${currentPlan.name} Quote`;
+    document.getElementById('qName').value = '';
+    document.getElementById('qAge').value = '';
+    document.getElementById('qCoverage').value = '1.5';
+    updateTotal();
+    showView('detail');
+  }
+
+  function updateTotal(){
+    if(!currentPlan) return;
+    const level = parseFloat(document.getElementById('qCoverage').value);
+    const base = Math.round(currentPlan.base * level);
+    let addons = 0;
+    document.querySelectorAll('.addonCheck').forEach(c => {
+      if(c.checked) addons += currentPlan.addons[c.dataset.idx][1];
+    });
+    document.getElementById('priceBase').textContent = `₱${base.toLocaleString()}`;
+    document.getElementById('priceAddons').textContent = `₱${addons.toLocaleString()}`;
+    document.getElementById('priceTotal').textContent = `₱${(base+addons).toLocaleString()}`;
+  }
+  document.getElementById('qCoverage').addEventListener('change', updateTotal);
+
+  function getQuote(){
+    const name = document.getElementById('qName').value || 'Guest Applicant';
+    const levelSel = document.getElementById('qCoverage');
+    const levelText = levelSel.options[levelSel.selectedIndex].text;
+    const ref = 'KAL-' + Math.floor(100000 + Math.random()*900000);
+    const today = new Date().toLocaleDateString('en-US',{month:'short', day:'numeric', year:'numeric'});
+
+    document.getElementById('ccTop').style.background = currentPlan.grad;
+    document.getElementById('ccPlanName').textContent = currentPlan.name;
+    document.getElementById('ccHolder').textContent = name;
+    document.getElementById('ccLevel').textContent = levelText;
+    document.getElementById('ccPremium').textContent = document.getElementById('priceTotal').textContent + ' / mo';
+    document.getElementById('ccDate').textContent = today;
+    document.getElementById('ccPolicy').textContent = 'POLICY NO. ' + ref;
+    showView('result');
+  }
+
+  renderGrid();
+</script>
+
+</body>
+</html>
