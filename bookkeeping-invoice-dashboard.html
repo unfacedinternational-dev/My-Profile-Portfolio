@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger Line | Bookkeeping and Invoice Dashboard</title>
+<meta name="description" content="Sample bookkeeping and invoice dashboard web app: track revenue, manage invoices, and record payments. Demo project by Joy D. Norca.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --emerald:#0E9F6E;
+    --emerald-deep:#065F46;
+    --emerald-soft:#DCFBEF;
+    --amber:#F5A524;
+    --amber-soft:#FEF3C7;
+    --rose:#E11D48;
+    --rose-soft:#FFE1E6;
+    --sky:#0EA5E9;
+    --sky-soft:#E0F2FE;
+    --ink:#0F172A;
+    --slate:#64748B;
+    --bg:#F5F7FA;
+    --line:#E2E8F0;
+    --shadow:0 10px 26px rgba(15,23,42,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Work Sans', sans-serif; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Sora', sans-serif; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  button{ font-family:inherit; cursor:pointer; border:none; }
+  :focus-visible{ outline:3px solid var(--emerald); outline-offset:2px; }
+
+  /* ===== Shell ===== */
+  .shell{ display:grid; grid-template-columns:230px 1fr; min-height:100vh; }
+  @media (max-width:820px){ .shell{ grid-template-columns:1fr; } }
+
+  .side{ background:var(--ink); color:#fff; padding:22px 18px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:17px; margin-bottom:28px; }
+  .logo-mark{ width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--emerald),var(--sky)); display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .side-nav button{ display:flex; align-items:center; gap:10px; width:100%; background:transparent; color:#CBD5E1; padding:11px 12px; border-radius:9px; font-size:13.5px; font-weight:500; text-align:left; margin-bottom:4px; }
+  .side-nav button.active{ background:rgba(14,159,110,0.18); color:#fff; font-weight:600; }
+  .side-nav button:hover{ background:rgba(255,255,255,0.06); }
+  .side-foot{ margin-top:30px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.12); font-size:11.5px; color:#94A3B8; line-height:1.6; }
+
+  .main{ padding:26px 30px 60px; }
+  .topline{ display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; flex-wrap:wrap; gap:10px; }
+  .topline h2{ font-size:22px; font-weight:700; }
+  .topline p{ font-size:12.5px; color:var(--slate); margin:2px 0 0; }
+  .btn{ background:var(--emerald); color:#fff; padding:9px 16px; border-radius:8px; font-size:12.5px; font-weight:700; transition:opacity .15s ease; }
+  .btn:hover{ opacity:.88; }
+  .btn.outline{ background:transparent; border:1.5px solid var(--line); color:var(--ink); }
+  .btn.full{ width:100%; text-align:center; padding:12px; font-size:13.5px; }
+
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  /* ===== Dashboard ===== */
+  .stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+  @media (max-width:900px){ .stat-grid{ grid-template-columns:repeat(2,1fr); } }
+  .card{ background:#fff; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--line); }
+  .stat{ padding:18px; border-left:4px solid var(--emerald); }
+  .stat.c-amber{ border-left-color:var(--amber); }
+  .stat.c-rose{ border-left-color:var(--rose); }
+  .stat.c-sky{ border-left-color:var(--sky); }
+  .stat .label{ font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--slate); font-weight:700; margin-bottom:8px; }
+  .stat .value{ font-family:'Sora',sans-serif; font-size:22px; font-weight:800; }
+  .stat.c-amber .value{ color:var(--amber); }
+  .stat.c-rose .value{ color:var(--rose); }
+  .stat.c-sky .value{ color:var(--sky); }
+  .stat.c-emerald .value, .stat .value{ color:var(--emerald-deep); }
+  .stat .sub{ font-size:11.5px; color:var(--slate); margin-top:4px; }
+
+  .dash-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:20px; }
+  @media (max-width:900px){ .dash-grid{ grid-template-columns:1fr; } }
+
+  .panel{ padding:20px 22px; margin-bottom:20px; }
+  .panel h3{ font-size:15px; font-weight:700; margin-bottom:16px; }
+
+  .bar-chart{ display:flex; align-items:flex-end; gap:14px; height:150px; padding-top:10px; }
+  .bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .bar{ width:100%; border-radius:6px 6px 0 0; background:linear-gradient(180deg,var(--emerald),var(--emerald-deep)); position:relative; }
+  .bar-amt{ font-size:10px; color:var(--slate); margin-bottom:5px; font-family:'IBM Plex Mono',monospace; }
+  .bar-label{ font-size:11px; color:var(--slate); margin-top:8px; font-weight:600; }
+
+  .client-row{ display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--line); font-size:13px; }
+  .client-row:last-child{ border-bottom:none; }
+  .client-name{ font-weight:600; }
+  .client-amt{ font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--emerald-deep); }
+
+  /* ===== Invoice table ===== */
+  .filter-row{ display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .chip{ padding:7px 15px; border-radius:999px; border:1.5px solid var(--line); background:#fff; font-size:12.5px; font-weight:600; color:var(--slate); }
+  .chip.active{ background:var(--ink); border-color:var(--ink); color:#fff; }
+
+  .inv-table{ width:100%; border-collapse:collapse; }
+  .inv-table th{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--slate); padding:0 16px 10px; font-weight:700; }
+  .inv-row td{ background:#fff; padding:14px 16px; font-size:13.5px; border-top:1px solid var(--line); }
+  .inv-row td:first-child{ border-left:1px solid var(--line); border-radius:10px 0 0 10px; }
+  .inv-row td:last-child{ border-right:1px solid var(--line); border-radius:0 10px 10px 0; }
+  .inv-row{ cursor:pointer; }
+  .inv-row:hover td{ background:var(--emerald-soft); }
+  .inv-id{ font-family:'IBM Plex Mono',monospace; color:var(--slate); font-size:12px; }
+  .badge{ font-size:11px; font-weight:700; padding:4px 11px; border-radius:999px; white-space:nowrap; }
+  .badge.paid{ background:var(--emerald-soft); color:var(--emerald-deep); }
+  .badge.pending{ background:var(--amber-soft); color:#92620A; }
+  .badge.overdue{ background:var(--rose-soft); color:var(--rose); }
+  .amt-cell{ font-family:'IBM Plex Mono',monospace; font-weight:700; }
+
+  /* ===== Invoice detail (ledger paper) ===== */
+  .back-link{ display:inline-flex; align-items:center; gap:6px; color:var(--emerald-deep); font-weight:700; font-size:13px; margin-bottom:18px; cursor:pointer; }
+  .ledger-wrap{ max-width:640px; margin:0 auto; }
+  .ledger{ background:#fff; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--line); padding:32px 34px; position:relative; overflow:hidden; }
+  .stamp-paid{
+    position:absolute; top:38px; right:38px; border:3px solid var(--emerald); color:var(--emerald);
+    font-family:'Sora',sans-serif; font-weight:800; font-size:22px; letter-spacing:2px; padding:6px 18px;
+    border-radius:8px; transform:rotate(-12deg); opacity:.85; text-transform:uppercase;
+  }
+  .ledger-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:26px; flex-wrap:wrap; gap:14px; }
+  .ledger-head h2{ font-size:20px; margin-bottom:4px; }
+  .ledger-head .biz{ font-size:12px; color:var(--slate); line-height:1.5; }
+  .ledger-meta{ text-align:right; font-size:12.5px; }
+  .ledger-meta .num{ font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--ink); }
+  .ledger-meta .l{ color:var(--slate); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-top:8px; }
+
+  .bill-to{ margin-bottom:22px; }
+  .bill-to .l{ font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--slate); font-weight:700; margin-bottom:4px; }
+  .bill-to .v{ font-size:14px; font-weight:600; }
+
+  .line-table{ width:100%; border-collapse:collapse; margin-bottom:20px; }
+  .line-table th{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--slate); padding:8px 0; border-bottom:2px solid var(--ink); }
+  .line-table td{ padding:11px 0; font-size:13.5px; border-bottom:1px solid var(--line); }
+  .line-table td.num, .line-table th.num{ text-align:right; font-family:'IBM Plex Mono',monospace; }
+
+  .totals{ margin-left:auto; width:220px; }
+  .t-row{ display:flex; justify-content:space-between; font-size:13px; padding:6px 0; color:var(--slate); }
+  .t-row.grand{ font-size:17px; font-weight:800; color:var(--ink); border-top:2px solid var(--ink); padding-top:10px; margin-top:6px; }
+
+  .ledger-actions{ display:flex; gap:10px; margin-top:26px; }
+
+  .demo-note{ margin-top:36px; padding:14px 18px; background:var(--emerald-soft); border-radius:10px; font-size:12px; color:var(--emerald-deep); line-height:1.6; }
+  .demo-note strong{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="side">
+    <div class="logo"><div class="logo-mark">📊</div> Ledger Line</div>
+    <div class="side-nav">
+      <button class="active" data-view="dashboard" onclick="switchView('dashboard', this)">🏠 Dashboard</button>
+      <button data-view="invoices" onclick="switchView('invoices', this)">🧾 Invoices</button>
+    </div>
+    <div class="side-foot">Bookkeeping for<br><strong style="color:#fff;">Meridian Auto Parts Co.</strong></div>
+  </div>
+
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="topline">
+        <div><h2>Dashboard</h2><p>Overview for August 2026</p></div>
+        <button class="btn" onclick="switchView('invoices', document.querySelector('[data-view=invoices]'))">View All Invoices</button>
+      </div>
+
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="dash-grid">
+        <div>
+          <div class="card panel">
+            <h3>Revenue, Last 6 Months</h3>
+            <div class="bar-chart" id="barChart"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card panel">
+            <h3>Top Clients This Month</h3>
+            <div id="clientList"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-note">
+        <strong>About this project:</strong> This is a sample bookkeeping and invoice dashboard, track revenue, manage invoices, and record payments, with totals that update live. Built as a front end demo; a live version would connect to a real accounting database. Designed and developed by Joy D. Norca.
+      </div>
+    </div>
+
+    <!-- INVOICES LIST -->
+    <div class="view" id="view-invoices">
+      <div class="topline">
+        <div><h2>Invoices</h2><p id="invoiceCount"></p></div>
+        <button class="btn">+ New Invoice</button>
+      </div>
+
+      <div class="filter-row">
+        <button class="chip active" data-status="all" onclick="setStatus('all', this)">All</button>
+        <button class="chip" data-status="Paid" onclick="setStatus('Paid', this)">Paid</button>
+        <button class="chip" data-status="Pending" onclick="setStatus('Pending', this)">Pending</button>
+        <button class="chip" data-status="Overdue" onclick="setStatus('Overdue', this)">Overdue</button>
+      </div>
+
+      <table class="inv-table">
+        <thead><tr><th>Invoice</th><th>Client</th><th>Issued</th><th>Due</th><th>Status</th><th style="text-align:right;">Amount</th></tr></thead>
+        <tbody id="invoiceTbody"></tbody>
+      </table>
+    </div>
+
+    <!-- INVOICE DETAIL -->
+    <div class="view" id="view-detail">
+      <div class="back-link" onclick="switchView('invoices', document.querySelector('[data-view=invoices]'))">← Back to invoices</div>
+      <div class="ledger-wrap">
+        <div class="ledger">
+          <div class="stamp-paid" id="paidStamp" style="display:none;">Paid</div>
+          <div class="ledger-head">
+            <div>
+              <h2>Meridian Auto Parts Co.</h2>
+              <div class="biz">Km 4, National Highway, Tagum City<br>4business.updates@gmail.com</div>
+            </div>
+            <div class="ledger-meta">
+              <div class="num" id="detailInvNum">INV-0000</div>
+              <div class="l">Issued</div>
+              <div id="detailIssued">-</div>
+              <div class="l" style="margin-top:8px;">Due</div>
+              <div id="detailDue">-</div>
+            </div>
+          </div>
+
+          <div class="bill-to">
+            <div class="l">Bill To</div>
+            <div class="v" id="detailClient">-</div>
+          </div>
+
+          <table class="line-table">
+            <thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr></thead>
+            <tbody id="lineItems"></tbody>
+          </table>
+
+          <div class="totals">
+            <div class="t-row"><span>Subtotal</span><span class="mono" id="detailSubtotal">-</span></div>
+            <div class="t-row"><span>Tax (12%)</span><span class="mono" id="detailTax">-</span></div>
+            <div class="t-row grand"><span>Total Due</span><span class="mono" id="detailTotal">-</span></div>
+          </div>
+
+          <div class="ledger-actions">
+            <button class="btn full" id="markPaidBtn" onclick="markPaid()">Mark as Paid</button>
+            <button class="btn outline full">Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const invoices = [
+    { id:"INV-1042", client:"Bayani Freight Services", issued:"Aug 2, 2026", due:"Aug 16, 2026", status:"Overdue",
+      items:[["Brake pad set (4 units)",4,850],["Labor, brake service",1,1200],["Engine oil, 4L synthetic",2,900]] },
+    { id:"INV-1041", client:"Santos Trucking Co.", issued:"Aug 5, 2026", due:"Aug 19, 2026", status:"Pending",
+      items:[["Battery replacement",1,4200],["Diagnostic check",1,600]] },
+    { id:"INV-1040", client:"Reyes Logistics", issued:"Jul 28, 2026", due:"Aug 11, 2026", status:"Paid",
+      items:[["Tire replacement (set of 4)",4,3200],["Wheel alignment",1,800]] },
+    { id:"INV-1039", client:"Villareal Motors", issued:"Jul 20, 2026", due:"Aug 3, 2026", status:"Overdue",
+      items:[["Transmission fluid change",1,1800],["Filter replacement",2,450]] },
+    { id:"INV-1038", client:"Bayani Freight Services", issued:"Jul 15, 2026", due:"Jul 29, 2026", status:"Paid",
+      items:[["Full vehicle inspection",1,1500],["Air filter",1,650]] },
+    { id:"INV-1037", client:"Cruz Delivery Services", issued:"Jul 10, 2026", due:"Jul 24, 2026", status:"Paid",
+      items:[["Suspension repair",1,5400],["Labor, suspension",1,2000]] },
+    { id:"INV-1036", client:"Santos Trucking Co.", issued:"Jul 3, 2026", due:"Jul 17, 2026", status:"Pending",
+      items:[["Radiator flush",1,1100],["Coolant, 4L",2,400]] },
+    { id:"INV-1035", client:"Reyes Logistics", issued:"Jun 28, 2026", due:"Jul 12, 2026", status:"Paid",
+      items:[["Clutch replacement",1,6800],["Labor, clutch service",1,2500]] }
+  ];
+
+  function invTotal(inv){
+    const sub = inv.items.reduce((s,[,q,r]) => s + q*r, 0);
+    const tax = Math.round(sub * 0.12);
+    return { sub, tax, total: sub+tax };
+  }
+
+  let currentStatus = 'all';
+  let currentInvoice = null;
+
+  function switchView(name, btn){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    if(btn){
+      document.querySelectorAll('.side-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function renderDashboard(){
+    const totalRevenue = invoices.filter(i=>i.status==="Paid").reduce((s,i)=>s+invTotal(i).total,0);
+    const outstanding = invoices.filter(i=>i.status!=="Paid").reduce((s,i)=>s+invTotal(i).total,0);
+    const overdue = invoices.filter(i=>i.status==="Overdue").reduce((s,i)=>s+invTotal(i).total,0);
+    const paidCount = invoices.filter(i=>i.status==="Paid").length;
+
+    document.getElementById('statGrid').innerHTML = `
+      <div class="card stat"><div class="label">Total Revenue</div><div class="value">₱${totalRevenue.toLocaleString()}</div><div class="sub">${paidCount} invoices paid</div></div>
+      <div class="card stat c-amber"><div class="label">Outstanding</div><div class="value">₱${outstanding.toLocaleString()}</div><div class="sub">Pending and overdue</div></div>
+      <div class="card stat c-rose"><div class="label">Overdue</div><div class="value">₱${overdue.toLocaleString()}</div><div class="sub">Needs follow-up</div></div>
+      <div class="card stat c-sky"><div class="label">Active Clients</div><div class="value">5</div><div class="sub">Billed this quarter</div></div>
+    `;
+
+    const months = [["Mar",42000],["Apr",51000],["May",38000],["Jun",60500],["Jul",47000],["Aug",33500]];
+    const max = Math.max(...months.map(m=>m[1]));
+    document.getElementById('barChart').innerHTML = months.map(([m,v]) => `
+      <div class="bar-col">
+        <div class="bar-amt">₱${(v/1000).toFixed(0)}k</div>
+        <div class="bar" style="height:${(v/max*100)}px"></div>
+        <div class="bar-label">${m}</div>
+      </div>
+    `).join('');
+
+    const byClient = {};
+    invoices.forEach(i => { byClient[i.client] = (byClient[i.client]||0) + invTotal(i).total; });
+    const sorted = Object.entries(byClient).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    document.getElementById('clientList').innerHTML = sorted.map(([name,amt]) =>
+      `<div class="client-row"><span class="client-name">${name}</span><span class="client-amt">₱${amt.toLocaleString()}</span></div>`).join('');
+  }
+
+  function filteredInvoices(){
+    return invoices.filter(i => currentStatus === 'all' || i.status === currentStatus);
+  }
+
+  function renderInvoices(){
+    const list = filteredInvoices();
+    document.getElementById('invoiceCount').textContent = `${list.length} invoices`;
+    document.getElementById('invoiceTbody').innerHTML = list.map(inv => {
+      const t = invTotal(inv);
+      const cls = inv.status.toLowerCase();
+      return `<tr class="inv-row" onclick="openInvoice('${inv.id}')">
+        <td class="inv-id">${inv.id}</td>
+        <td>${inv.client}</td>
+        <td>${inv.issued}</td>
+        <td>${inv.due}</td>
+        <td><span class="badge ${cls}">${inv.status}</span></td>
+        <td class="amt-cell" style="text-align:right;">₱${t.total.toLocaleString()}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function setStatus(status, el){
+    currentStatus = status;
+    document.querySelectorAll('.filter-row .chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderInvoices();
+  }
+
+  function openInvoice(id){
+    currentInvoice = invoices.find(i => i.id === id);
+    const t = invTotal(currentInvoice);
+    document.getElementById('detailInvNum').textContent = currentInvoice.id;
+    document.getElementById('detailIssued').textContent = currentInvoice.issued;
+    document.getElementById('detailDue').textContent = currentInvoice.due;
+    document.getElementById('detailClient').textContent = currentInvoice.client;
+    document.getElementById('lineItems').innerHTML = currentInvoice.items.map(([d,q,r]) =>
+      `<tr><td>${d}</td><td class="num">${q}</td><td class="num">₱${r.toLocaleString()}</td><td class="num">₱${(q*r).toLocaleString()}</td></tr>`).join('');
+    document.getElementById('detailSubtotal').textContent = `₱${t.sub.toLocaleString()}`;
+    document.getElementById('detailTax').textContent = `₱${t.tax.toLocaleString()}`;
+    document.getElementById('detailTotal').textContent = `₱${t.total.toLocaleString()}`;
+    document.getElementById('paidStamp').style.display = currentInvoice.status === 'Paid' ? 'block' : 'none';
+    document.getElementById('markPaidBtn').style.display = currentInvoice.status === 'Paid' ? 'none' : 'block';
+    switchView('detail', null);
+  }
+
+  function markPaid(){
+    currentInvoice.status = 'Paid';
+    document.getElementById('paidStamp').style.display = 'block';
+    document.getElementById('markPaidBtn').style.display = 'none';
+    renderDashboard();
+  }
+
+  renderDashboard();
+  renderInvoices();
+</script>
+
+</body>
+</html>
